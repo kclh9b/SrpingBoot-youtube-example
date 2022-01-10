@@ -10,6 +10,19 @@
     <link href="starter-template.css" th:href="@{/starter-template.css}" rel="stylesheet">
 
     <title>게시판</title>
+    <style>
+    .table-dark{
+      --darkreader-bg--bs-table-bg: #1c1e1f;
+      --darkreader-bg--bs-table-striped-bg: #242729;
+      --darkreader-text--bs-table-striped-color: #e8e6e3;
+      --darkreader-bg--bs-table-active-bg: #2c3032;
+      --darkreader-text--bs-table-active-color: #e8e6e3;
+      --darkreader-bg--bs-table-hover-bg: #282c2d;
+      --darkreader-text--bs-table-hover-color: #e8e6e3;
+      color: rgb(232, 230, 227);
+      border-color: rgb(121, 112, 99);
+    }
+    </style>
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" th:replace="~{fragments/common :: menu('board')}">
@@ -32,6 +45,45 @@
 
     <div class="container">
       <h2>게시판</h2>
+      <div>총 건수 : <span th:text="${boards.totalElements}"></span></div>
+      <form class="form-inline d-flex justify-content-end" method="GET" th:action="@{/board/list}">
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="searchText" class="sr-only">검색</label>
+          <input type="text" class="form-control" id="searchText" name="searchText" th:value="${param.searchText}">
+        </div>
+        <button type="submit" class="btn btn-light mb-2">검색</button>
+      </form>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th scope="col">번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="board : ${boards}">
+            <th th:text="${board.id}">Mark</th>
+            <td><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">Otto</a></td>
+            <td>홍길동</td>
+          </tr>
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber - 1}, searchText=${param.searchText})}" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          <li class="page-item" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link" href="#" th:href="@{/board/list(page=${i - 1}, searchText=${param.searchText})}" th:text="${i}">1</a></li>
+          <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
+            <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber + 1}, searchText=${param.searchText})}">Next</a>
+          </li>
+        </ul>
+      </nav>
+      <div class="text-right">
+        <a type="button" class="btn btn-primary" th:href="@{/board/form}">쓰기</a>
+      </div>
     </div>
 
     <!-- Optional JavaScript; choose one of the two! -->

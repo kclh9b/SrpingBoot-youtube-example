@@ -1,4 +1,4 @@
-package example.myrest;
+package example.myrest.config;
 
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;

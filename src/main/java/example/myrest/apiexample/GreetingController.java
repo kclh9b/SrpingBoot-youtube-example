@@ -1,4 +1,4 @@
-package example.myrest;
+package example.myrest.apiexample;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

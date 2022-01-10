@@ -1,4 +1,4 @@
-package example.myrest;
+package example.myrest.apiexample;
 
 public class Greeting {
 
