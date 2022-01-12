@@ -35,14 +35,14 @@ class UserApiController {
             QUser user = QUser.user;
             Predicate predicate = user.username.contains(text);
             users = repository.findAll(predicate);
-/*            BooleanExpression b = user.username.contains(text);
+            BooleanExpression b = user.username.contains(text);
             if (true) {
                 b = b.and(user.username.eq("HI"));
             }
-            users = repository.findAll(b);*/
+            users = repository.findAll(b);
         } else if ("querydslCustom".equals(method)) {
             users = repository.findByUsernameCustom(text);
-        } else if ("querydslCustom".equals(method)) {
+        } else if ("jdbc".equals(method)) {
             users = repository.findByUsernameJdbc(text);
         } else {
             users = repository.findAll();

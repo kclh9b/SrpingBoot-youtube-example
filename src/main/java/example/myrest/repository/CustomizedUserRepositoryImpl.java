@@ -33,7 +33,7 @@ public class CustomizedUserRepositoryImpl implements CustomizedUserRepository{
     public List<User> findByUsernameJdbc(String username) {
         List<User> users = jdbcTemplate.query(
                 "SELECT * FROM USER WHERE username like ?",
-                new Object[]{username + "%"},
+                new Object[]{"%" + username + "%"},
                 new BeanPropertyRowMapper<>(User.class));
         return  users;
     }
